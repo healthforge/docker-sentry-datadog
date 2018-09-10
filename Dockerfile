@@ -53,9 +53,6 @@ RUN set -x \
     && python -c 'import librabbitmq' \
     && apt-get purge -y --auto-remove make
 
-# Install datadog package
-RUN set -x && pip install datadog
-
 ENV SENTRY_VERSION 9.0.0
 
 RUN set -x \
@@ -86,6 +83,11 @@ COPY sentry.conf.py /etc/sentry/
 COPY config.yml /etc/sentry/
 
 COPY docker-entrypoint.sh /entrypoint.sh
+
+# Install datadog package and set env variables
+RUN set -x && pip install datadog
+ENV SENTRY_METRICS_BACKEND="sentry.metrics.statsd.StatsdMetricsBackend" \
+    SENTRY_METRICS_OPTIONS="{'host': '172.17.0.1', 'port':8125, 'tags':{}}"
 
 EXPOSE 9000
 VOLUME /var/lib/sentry/files
