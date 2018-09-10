@@ -1,0 +1,8 @@
+steps:
+- label: ':docker: Package'
+  command:
+  - 'docker build -t ${REPOSITORY_URI}:${BUILDKITE_BUILD_ID} .'
+  plugins:
+    healthforge/docker-tags:
+      registry: '${REPOSITORY_URI}'
+      tag: '${BUILDKITE_BUILD_ID}'
