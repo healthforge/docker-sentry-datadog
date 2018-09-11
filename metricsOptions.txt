@@ -1,0 +1,7 @@
+
+SENTRY_METRICS_BACKEND = 'sentry.metrics.dogstatsd.DogStatsdMetricsBackend'
+SENTRY_METRICS_OPTIONS = {
+    'host': '172.17.0.1',
+    'port':8125,
+    'tags':{},
+}
